@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,7 +12,7 @@
   --light-grey: #dce4e3;
   --text-color: #084236;
 }
-body{
+body {
   background-color: var(--body-bg-color);
   font-family: 'Poppins', sans-serif;
   display: grid;
@@ -20,29 +20,49 @@ body{
   height: 100vh;
   color: var(--text-color);
 }
-a{
+a {
   text-decoration: none;
   color: var(--text-color);
 }
-main{
+main {
   padding: 18px 20px;
 }
-main h1{
+main h1 {
   font-weight: 500;
   font-size: 25px;
   line-height: 38px;
 }
-header{
+header {
   background-color: var(--green);
   width: 78px;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: width .4s ease-in-out 200ms;
+}
+header.show nav {
+  width: 250px;
+}
+header.show {
+  width: 250px;
+  transition: width .4s ease-in-out 200ms;
+}
+ul li a,
+header.show ul li:first-child,
+.login.show,
+.user.show{
+  display: flex;
+  align-items: center;
+}
+.logo.show {
+  padding: 10px 15px;
 }
 ul {
   list-style: none;
   padding: 13px 0;
+}
+header.show ul li:first-child {
+  justify-content: space-between;
 }
 ul li,
 ul li:active,
@@ -51,67 +71,48 @@ ul li:hover {
   margin-bottom: 8px;
   width: 100%;
   padding: 0 14px;
-}
-ul li a{
-  display: flex;
-  align-items: center;
+} 
+ul li a {
   padding: 13px;
   border-radius: 12px;
-}
-ul li:first-child a,
-ul li:last-child a{
-  border-radius: 0;
-}
-ul li a:hover{
-  background-color: var(--light-grey);
-}
-.item-text,
-.logo, 
-.user,
-input.search{
-  display: none;
-}
-.login{
-  padding: 18px 27px;
-  background-color: var(--light-green);
-}
-.hide{
-  display: none;
-}
-
-/* sidebar opened */
-header.show{
-  width: 250px;
-}
-ul li:first-child{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-ul li span.logo{
-  padding: 10px 15px;
-}
-li a {
   gap: 13px;
   font-weight: 400;
   font-size: 15px;
   line-height: 22px;
   text-transform: capitalize;
 }
-.item-text.show,
-.logo.show, 
-input.search.show{
-  display: block;
+ul li:first-child a,
+ul li:last-child a {
+  border-radius: 0;
 }
-input.search{
+a.icon-search,
+ul li a:hover {
+  background-color: var(--light-grey);
+}
+a.icon-search {
+  opacity: 1;
+  position: static;
+}
+a.icon-search:hover {
+  background-color: #c4c4c4;
+}
+a.icon-search.hide {
+  opacity: 0;
+  position: absolute;
+  transition: all 0.4s ease-in-out 200ms;
+}
+a:focus,
+input.search:focus {
+  outline-offset: -1px;
+  outline: 2px solid var(--text-color);  
+}
+input.search {
   border-radius: 12px;
   border: none;
-  
   background: var(--light-green);
   background-image: url('../images/search.svg');
   background-repeat: no-repeat;
   background-position: 14px center;
-
   padding: 14px 14px 14px 50px;
   width: 222px;
 }
@@ -123,40 +124,57 @@ input.search::placeholder {
   line-height: 22px;
   text-transform: capitalize;
 }
-input.search:focus{
-  outline-offset: -1px;
-  outline: 1px solid var(--text-color);  
+.item-text,
+.logo,
+.user,
+input.search {
+  opacity: 0;
+  position: absolute;
+  left: -999rem;
 }
-.login.show{
-  display: flex;
+.item-text.show,
+.logo.show,
+.user.show,
+input.search.show {
+  opacity: 1;
+  position: static;
+  left: 0;
+  transition: all 0.4s ease-in-out 500ms;
+}
+.login {
+  height: 60px;
+  padding: 18px 27px;
+  background-color: var(--light-green);
+}
+.login.show {
   justify-content: space-between;
-  align-items: center;
   gap: 33px; 
   padding: 7px 14px;
 }
-.user.show{
-  display: flex;
-  align-items: center;
+.login a{  
+  height: 24px;
+}
+.user.show {
   gap: 9px;
 }
-.user img{
+.user.show img {
   width: 45px;
   height: 45px;
   border-radius: 12px;
 }
-.user-info{
+.user.show .user-info {
   height: 36px;
 }
-.user-info .user-name,
-.user-info .user-job{
+.user.show .user-info .user-name,
+.user.show .user-info .user-job {
   font-weight: 400;
   text-transform: capitalize;
 }
-.user-info .user-name {
+.user.show .user-info .user-name {
   font-size: 15px;
   line-height: 22.5px;
 }
-.user-info .user-job{
+.user.show .user-info .user-job {
   font-size: 12px;
   line-height: 18px;
-}
+} 

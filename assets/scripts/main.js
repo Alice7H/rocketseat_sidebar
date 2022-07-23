@@ -1,40 +1,46 @@
 (() => {
   const menu = document.querySelector('.menu');
+  const iconSearch = document.querySelector('.icon-search');
+  const logout = document.querySelector('.login a');
 
-  menu.addEventListener('click', () => {
+  let interval;
+
+  menu.addEventListener('click', handleExpandSideBar);
+  iconSearch.addEventListener('click', handleExpandSideBar);
+
+  function handleExpandSideBar() {
     const header = document.querySelector('header');
     const logo = document.querySelector('.logo');
-    const iconSearch = document.querySelector('.icon-search');
     const search = document.querySelector('.search');
     const items = document.querySelectorAll('.item-text');
     const login = document.querySelector('.login');
     const user = document.querySelector('.user');
 
+    const elements = [header, logo, login, user, search, ...items];
+
+    elements.map(element => element.classList.toggle('show'));
+    iconSearch.classList.toggle('hide');
+    delayToMove();
+
     if (!header.classList.contains('show')) {
-      handleHideElementToExpand(iconSearch);
-      const elementsToShow = [header, logo, login, user, search, ...items];
-      elementsToShow.map(element => handleAddClassToExpand(element));
+      search.tabIndex = -1;
+      iconSearch.tabIndex = 0;
+      iconSearch.ariaHidden = true;
     } else {
-      handleShowElementToCollapse(iconSearch);
-      const elementsToRemoveShow = [header, logo, login, user, search, ...items];
-      elementsToRemoveShow.map(element => handleRemoveClassToCollapse(element));
-
+      search.tabIndex = 0;
+      iconSearch.tabIndex = -1;
+      iconSearch.ariaHidden = false;
     }
-  });
-
-  function handleAddClassToExpand(element) {
-    console.log('element', element);
-    element.classList.add('show');
-  }
-  function handleHideElementToExpand(element) {
-    element.classList.add('hide');
   }
 
-  function handleRemoveClassToCollapse(element) {
-    element.classList.remove('show');
+  function delayToMove() {
+    menu.style.position = 'absolute';
+    logout.style.position = 'absolute';
+    logout.style.left = '27px';
+    interval = setTimeout(() => {
+      menu.style.position = 'static';
+      logout.style.position = 'static';
+    }, 500);
   }
-  function handleShowElementToCollapse(element) {
-    element.classList.remove('hide');
-  }
-
+  clearTimeout(interval);
 })()
